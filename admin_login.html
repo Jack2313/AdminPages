@@ -34,7 +34,7 @@
         </nav>
     </div>
 
-    <div class="container" style=>
+    <div class="container">
         <div id="center" style="height:20px" ></div>
         <div>
             <div class="col-md-4 col-md-offset-4">
@@ -66,7 +66,7 @@
     </div>  
 
     <script type="text/javascript">
-        var url="http://localhost:8083";
+        var url="http://localhost:5000";
         function onload()
         {   
 
@@ -78,41 +78,18 @@
         }
         function doPost()
         {
-            //alert("qqq");
-            /*var val1 = document.getElementById("username").value;
-            var val2 = document.getElementById("password").value;
-            //var btn = document.getElementById('btn');
-            //btn.addEventListener('mouseclick')
-            //http://localhost:8080/login.html
-            $.get(url+"users?nickname="+val1+"&password="+val2,function(data)
-            {
-                //alert(data);
-                if(data==0)
-                {
-                    alert("用户名或密码不正确！");
-                }
-                else
-                {
-                    
-                    //alert(data);
-                    document.cookie="userId="+data;
-                    //alert(getCookie("userId"));
-                    window.location.href="index.html"
-                }
-            }); */
             var admin_ID = document.getElementById("username").value;
             var admin_Password = document.getElementById("password").value;
-            //alert(admin_ID+admin_Password);           // var type = $('#option input:radio:checked').val();
-          // document.cookie = "type="+type;
-            //alert(document.cookie);
 
-            $.get(url+"/admin/login?adminname="+admin_ID+"&password="+admin_Password,function(data)
+            $.get(url+"/manager/login?username="+admin_ID+"&password="+admin_Password,function(data)
             {
-                if(data==1)
+            	//alert(JSON.stringify(data))
+            	message=JSON.parse(JSON.stringify(data))
+            	//alert(data)
+                if(message.code==1)
                 {
-                    document.cookie = "isAdmin="+true;
-                    document.cookie = "adminID="+data;
-                    document.cookie = "adminName="+admin_ID;
+                	setCookie("adminName", admin_ID, 1);
+                	setCookie("adminID", 1, 1);
                     alert("登陆成功！");
                     window.location.href="admin.html";
                 }
@@ -124,20 +101,13 @@
             });
         }
 
-        function getCookie(c_name){
-            if(document.cookie.length>0){
-                c_start=document.cookie.indexOf(c_name+"=")
-                if(c_start!=-1){
-                    c_start=c_start+c_name.length+1
-                    c_end=document.cookie.indexOf(";",c_start)
-                    if(c_end==-1){
-                        c_end=document.cookie.length
-                    }
-                    return unescape(document.cookie.substring(c_start,c_end))
-                }
-            }
-            return "";
-        }
+        function setCookie(cname, cvalue, exdays) {
+    		var d = new Date();
+    		d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    		var expires = "expires="+d.toUTCString();
+    		document.cookie = cname + "=" + cvalue + "; " + expires;
+	    }
+
     </script>
 
 </body>

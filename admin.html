@@ -35,7 +35,7 @@
                     </div>
                     <div style="margin-right:10%">
                         <ul class="nav navbar-nav navbar-left">  
-                            <li class="active"><a href="admin_login.html">管理员登录界面</a></li>
+                            <li class="active"><a href="#">管理员登录界面</a></li>
                         </ul>
                     </div>
                 </div>
@@ -75,22 +75,22 @@
 			         	<div class="form-group">
 			         		<label class="col-md-1 control-label">对话id</label>
 			         		<div class="col-md-2">
-                            <input class="form-control required" type="number" placeholder="选填" id="search_state_id" name="input_state_id" autofocus maxlength="20"/>
+                            <input class="form-control" type="number" placeholder="选填" id="search_state_id" name="input_state_id" autofocus maxlength="20"/>
                         	</div>
                         </div>
                         <div class="form-group">
 			         		<label class="col-md-1 control-label">对话内容</label>
 			         		<div class="col-md-5">
-                            <input class="form-control required" type="text" placeholder="选填" id="search_state_text" name="input_state_text"/>
+                            <input class="form-control" type="text" placeholder="选填" id="search_state_text" name="input_state_text"/>
                         	</div>
                         </div>
                         <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-1">
-                        	<button id='btn1' type="submit" class="btn btn-success" name="submit" onclick="search_statement()">查询</button>
+                        	<button id='btn1' type="button" class="btn btn-success" name="button" onclick="search_statement()">查询</button>
 
                     	</div>
                     	<div class="form-group col-md-1">
-                    		<button id='btn2' type="button" class="btn btn-danger" onclick="delete_statement()">删除所有查询到的对话</button>
+                    		<button id='btn2' type="button" class="btn btn-danger" onclick="delete_all_statement()">删除含text的对话</button>
                     	</div>
 
 			        </fieldset>
@@ -135,34 +135,34 @@
             </div>
 
             <div class="container">
-			    <form action="" class="form-horizontal"  role="form">
+			    <form action="" class="form-horizontal"  role="form" id="statement_form">
 			        <fieldset>
 			         	<div class="form-group">
 			         		<label class="col-md-1 control-label">对话id</label>
 			         		<div class="col-md-2">
-                            <input class="form-control required" type="number" placeholder="只在更新对话时填" id="input_state_id" name="input_state_id" autofocus maxlength="20"/>
+                            <input class="form-control" type="number" placeholder="只在更新对话时填" id="input_state_id" name="input_state_id" autofocus maxlength="20"/>
                         	</div>
                         </div>
                         <div class="form-group">
 			         		<label class="col-md-1 control-label">对话内容</label>
 			         		<div class="col-md-5">
-                            <input class="form-control required" type="text" placeholder="对话内容" id="input_state_text" name="input_state_text"/>
+                            <input class="form-control" type="text" placeholder="对话内容" id="input_state_text" name="input_state_text"/>
                         	</div>
                         </div>
 
                         <div class="form-group">
 			         		<label class="col-md-1 control-label">response to</label>
 			         		<div class="col-md-5">
-                            <input class="form-control required" type="text" placeholder="对话内容" id="input_state_response" name="input_state_text"/>
+                            <input class="form-control" type="text" placeholder="对话内容" id="input_state_response" name="input_state_text"/>
                         	</div>
                         </div>
 
                         <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-1">
-                        	<button id='btn3' type="submit" class="btn btn-success" name="submit" onclick="add_statement()">添加</button>
+                        	<button id='btn3' type="button" class="btn btn-success" name="button" onclick="add_statement()">添加</button>
                     	</div>
                     	<div class="form-group col-md-1">
-                        	<button id='btn4' type="submit" class="btn btn-success" name="submit" onclick="update_statement()">更新</button>
+                        	<button id='btn4' type="button" class="btn btn-success" name="button" onclick="update_statement()">更新</button>
                     	</div>
                     	<div class="form-group col-md-1">
                     		<button id='btn5' type="button" class="btn btn-danger" onclick="delete_input_statement()">清空当前对话</button>
@@ -186,22 +186,22 @@
 			         	<div class="form-group">
 			         		<label class="col-md-1 control-label">规则id</label>
 			         		<div class="col-md-2">
-                            <input class="form-control required" type="number" placeholder="选填" id="search_rule_id" name="input_rule_id" autofocus maxlength="20"/>
+                            <input class="form-control" type="number" placeholder="选填" id="search_rule_id" name="input_rule_id" autofocus maxlength="20"/>
                         	</div>
                         </div>
                         <div class="form-group">
 			         		<label class="col-md-1 control-label">输入文本</label>
 			         		<div class="col-md-5">
-                            <input class="form-control required" type="text" placeholder="选填" id="search_rule_text" name="input_rule_text"/>
+                            <input class="form-control" type="text" placeholder="选填" id="search_rule_text" name="input_rule_text"/>
                         	</div>
                         </div>
                         <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-1">
-                        	<button id='btn6' type="submit" class="btn btn-success" name="submit" onclick="search_rule()">查询</button>
+                        	<button id='btn6' type="button" class="btn btn-success" name="button" onclick="search_rule()">查询</button>
 
                     	</div>
                     	<div class="form-group col-md-1">
-                    		<button id='btn7' type="button" class="btn btn-danger" onclick="delete_rule()">删除所有查询到的规则</button>
+                    		<button id='btn7' type="button" class="btn btn-danger" onclick="delete_all_rule()">删除含text的规则</button>
                     	</div>
 
 			        </fieldset>
@@ -244,34 +244,34 @@
             </div>
 
             <div class="container">
-			    <form action="" class="form-horizontal"  role="form">
+			    <form action="" class="form-horizontal"  role="form" id="rule_form">
 			        <fieldset>
 			         	<div class="form-group">
 			         		<label class="col-md-1 control-label">规则id</label>
 			         		<div class="col-md-2">
-                            <input class="form-control required" type="number" placeholder="只在更新规则时填" id="input_rule_id" name="input_rule_id" autofocus maxlength="20"/>
+                            <input class="form-control" type="number" placeholder="只在更新规则时填" id="input_rule_id" name="input_rule_id" autofocus maxlength="20"/>
                         	</div>
                         </div>
                         <div class="form-group">
 			         		<label class="col-md-1 control-label">对话内容</label>
 			         		<div class="col-md-5">
-                            <input class="form-control required" type="text" placeholder="对话内容" id="input_rule_text" name="input_rule_text"/>
+                            <input class="form-control" type="text" placeholder="对话内容" id="input_rule_text" name="input_rule_text"/>
                         	</div>
                         </div>
 
                         <div class="form-group">
 			         		<label class="col-md-1 control-label">response to</label>
 			         		<div class="col-md-5">
-                            <input class="form-control required" type="text" placeholder="对话内容" id="input_rule_response" name="input_rule_response"/>
+                            <input class="form-control" type="text" placeholder="对话内容" id="input_rule_response" name="input_rule_response"/>
                         	</div>
                         </div>
 
                         <div class="form-group col-md-2"></div>
                         <div class="form-group col-md-1">
-                        	<button id='btn6' type="submit" class="btn btn-success" name="submit" onclick="add_rule()">添加</button>
+                        	<button id='btn6' type="button" class="btn btn-success" name="button" onclick="add_rule()">添加</button>
                     	</div>
                     	<div class="form-group col-md-1">
-                        	<button id='btn7' type="submit" class="btn btn-success" name="submit" onclick="update_rule()">更新</button>
+                        	<button id='btn7' type="button" class="btn btn-success" name="button" onclick="update_rule()">更新</button>
                     	</div>
                     	<div class="form-group col-md-1">
                     		<button id='btn8' type="button" class="btn btn-danger" onclick="delete_input_rule()">清空当前规则</button>
@@ -291,7 +291,7 @@
 
     </body>
         <script>
-        var url="http://localhost:8083/";
+        var url="http://localhost:5000/";
         window.onload=function(){
             var table1=$('#dataTables-statement').DataTable({
                 searching: false,
@@ -313,22 +313,22 @@
                 var s=table1.row({ selected: true }).data();
                 returnValue = confirm("确认删除这条对话吗？");
                 if(returnValue==true){
-                    confirm_url=url+"admin/verifyUser?userId="+s[0];
+                    confirm_url=url+"manager/delete_statement?sid="+s[0];
                     $.get(confirm_url);
-                    alert("授权成功！");
-                    window.location.href="admin.html";
+                    alert("删除成功！");
+                    search_statement();
                 }
             } );
 
-            $("#dataTables-statement").DataTable().on("select", function () {
+            $("#dataTables-rule").DataTable().on("select", function () {
 
                 var s=table2.row({ selected: true }).data();
                 returnValue = confirm("确认删除这条规则吗？");
                 if(returnValue==true){
-                    confirm_url=url+"admin/verifyUser?userId="+s[0];
+                    confirm_url=url+"manager/delete_rule?rid="+s[0];
                     $.get(confirm_url);
-                    alert("授权成功！");
-                    window.location.href="admin.html";
+                    alert("删除成功！");
+                    search_rule();
                 }
             } );
             uname1();
@@ -339,8 +339,8 @@
         {
             var b=checkName();
             if(b=="游客"){
-                //window.location.href="admin_login.html";
-                //alert("请先登录！");
+                window.location.href="admin_login.html";
+                alert("请先登录！");
             }
             $("#admin_name").append(b);
             var a=checkID();
@@ -370,11 +370,28 @@
         }
 
         function search_statement(){
+        	$("#dataTables-statement").DataTable().clear();
 
         }
 
-        function delete_statement(){
-
+        function delete_all_statement(){
+        	s_text=document.getElementById("search_state_text").value;
+        	if(s_text==''){
+        		alert('无搜索文本!');
+        		return 
+        	}
+        	thisurl=url+"manager/delete_all_statement?text="+s_text;
+        	$.get(thisurl, function(data)
+            {
+            	message=JSON.parse(JSON.stringify(data))
+            	//alert(data)
+                if(message.code==1){
+                	alert("成功删除"+message.number+"条数据");
+                	$("#dataTables-statement").DataTable().clear();
+                }else{
+                	alert("没有搜索到数据!");
+                }
+            });
         }
 
         function add_statement(){
@@ -386,15 +403,32 @@
         }
 
         function delete_input_statement(){
-
+        	document.getElementById("statement_form").reset();
         }
 
         function search_rule(){
-
+        	$("#dataTables-rule").DataTable().clear();
+        	
         }
 
-        function delete_rule(){
-
+        function delete_all_rule(){
+        	r_text=document.getElementById("search_rule_text").value;
+        	if(r_text==''){
+        		alert('无搜索文本!');
+        		return 
+        	}
+        	thisurl=url+"manager/delete_all_rule?text="+r_text;
+        	$.get(thisurl, function(data)
+            {
+            	message=JSON.parse(JSON.stringify(data))
+            	//alert(data)
+                if(message.code==1){
+                	alert("成功删除"+message.number+"条数据");
+                	$("#dataTables-rule").DataTable().clear();
+                }else{
+                	alert("没有搜索到数据!");
+                }
+            });
         }
 
         function add_rule(){
@@ -406,9 +440,8 @@
         }
 
         function delete_input_rule(){
-
+        	document.getElementById("rule_form").reset();
         }
-
 
         function getCookie(c_name)
         /***/{
@@ -443,32 +476,23 @@
         /***/}
         /***/function checkName()
         /***/{
-        /***/    var adminID = getCookie("adminName");
+        /***/    var adminName = getCookie("adminName");
         /***/    //alert("userid"+userid+"  type"+type);
-        /***/   if(adminID=="")
+        /***/   if(adminName=="")
         /***/   {
         /***/        var b="游客";
         /***/       return b;
         /***/   }
-        /***/   else if(adminID!="")
+        /***/   else
         /***/   {
-        /***/        return 'admin';                
+        /***/        return adminName;                
         /***/   }
         /***/}
-        /***/function checkID()
-        /***/{
-        /***/    var adminID = getCookie("adminID");
-        /***/    //alert("userid"+userid+"  type"+type);
-        /***/   if(adminID=="")
-        /***/   {
-        /***/        var b="";
-        /***/       return b;
-        /***/   }
-        /***/   else if(adminID!="")
-        /***/   {
-        /***/        return adminID;                
-        /***/   }
-            }
+
+        function checkID(){
+        	var adminID=getCookie("adminID");
+        	return adminID;
+        }
         
         </script>
         
