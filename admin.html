@@ -73,18 +73,18 @@
 			    <form action="" class="form-horizontal"  role="form">
 			        <fieldset>
 			         	<div class="form-group">
-			         		<label class="col-md-1 control-label">对话id</label>
+			         		<label class="col-md-2 control-label">对话id</label>
 			         		<div class="col-md-2">
                             <input class="form-control" type="number" placeholder="选填" id="search_state_id" name="input_state_id" autofocus maxlength="20"/>
                         	</div>
                         </div>
                         <div class="form-group">
-			         		<label class="col-md-1 control-label">对话内容</label>
+			         		<label class="col-md-2 control-label">对话内容</label>
 			         		<div class="col-md-5">
                             <input class="form-control" type="text" placeholder="选填" id="search_state_text" name="input_state_text"/>
                         	</div>
                         </div>
-                        <div class="form-group col-md-2"></div>
+                        <div class="form-group col-md-3"></div>
                         <div class="form-group col-md-1">
                         	<button id='btn1' type="button" class="btn btn-success" name="button" onclick="search_statement()">查询</button>
 
@@ -98,7 +98,7 @@
 			</div>
 
 			<div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-10">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             对话列表
@@ -110,7 +110,9 @@
                                     <tr>
                                         <th>id</th>
                                         <th>text</th>
-                                        <th>in response to</th>
+                                        <th>response</th>
+                                        <th>search_text</th>
+                                        <th>search_response</th>
                                         <th>tag</th>
                                     </tr>
                                 </thead>
@@ -138,26 +140,47 @@
 			    <form action="" class="form-horizontal"  role="form" id="statement_form">
 			        <fieldset>
 			         	<div class="form-group">
-			         		<label class="col-md-1 control-label">对话id</label>
+			         		<label class="col-md-2 control-label">对话id</label>
 			         		<div class="col-md-2">
                             <input class="form-control" type="number" placeholder="只在更新对话时填" id="input_state_id" name="input_state_id" autofocus maxlength="20"/>
                         	</div>
                         </div>
                         <div class="form-group">
-			         		<label class="col-md-1 control-label">对话内容</label>
+			         		<label class="col-md-2 control-label">text</label>
 			         		<div class="col-md-5">
                             <input class="form-control" type="text" placeholder="对话内容" id="input_state_text" name="input_state_text"/>
                         	</div>
                         </div>
 
                         <div class="form-group">
-			         		<label class="col-md-1 control-label">response to</label>
+			         		<label class="col-md-2 control-label">response to</label>
 			         		<div class="col-md-5">
-                            <input class="form-control" type="text" placeholder="对话内容" id="input_state_response" name="input_state_text"/>
+                            <input class="form-control" type="text" placeholder="回复内容" id="input_state_response" name="input_state_text"/>
                         	</div>
                         </div>
 
-                        <div class="form-group col-md-2"></div>
+                        <div class="form-group">
+			         		<label class="col-md-2 control-label">search_text</label>
+			         		<div class="col-md-5">
+                            <input class="form-control" type="text" placeholder="search_text" id="input_state_search_text"/>
+                        	</div>
+                        </div>
+
+                        <div class="form-group">
+			         		<label class="col-md-2 control-label">search_response</label>
+			         		<div class="col-md-5">
+                            <input class="form-control" type="text" placeholder="search_response" id="input_state_search_response"/>
+                        	</div>
+                        </div>
+
+                        <div class="form-group">
+			         		<label class="col-md-2 control-label">tags</label>
+			         		<div class="col-md-5">
+                            <input class="form-control" type="text" placeholder="tag,用+号相连" id="input_state_tags"/>
+                        	</div>
+                        </div>
+
+                        <div class="form-group col-md-3"></div>
                         <div class="form-group col-md-1">
                         	<button id='btn3' type="button" class="btn btn-success" name="button" onclick="add_statement()">添加</button>
                     	</div>
@@ -184,18 +207,18 @@
 			    <form action="" class="form-horizontal"  role="form">
 			        <fieldset>
 			         	<div class="form-group">
-			         		<label class="col-md-1 control-label">规则id</label>
+			         		<label class="col-md-2 control-label">规则id</label>
 			         		<div class="col-md-2">
                             <input class="form-control" type="number" placeholder="选填" id="search_rule_id" name="input_rule_id" autofocus maxlength="20"/>
                         	</div>
                         </div>
                         <div class="form-group">
-			         		<label class="col-md-1 control-label">输入文本</label>
+			         		<label class="col-md-2 control-label">输入文本</label>
 			         		<div class="col-md-5">
                             <input class="form-control" type="text" placeholder="选填" id="search_rule_text" name="input_rule_text"/>
                         	</div>
                         </div>
-                        <div class="form-group col-md-2"></div>
+                        <div class="form-group col-md-3"></div>
                         <div class="form-group col-md-1">
                         	<button id='btn6' type="button" class="btn btn-success" name="button" onclick="search_rule()">查询</button>
 
@@ -209,7 +232,7 @@
 			</div>
 
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-10">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             对话规则列表
@@ -247,26 +270,26 @@
 			    <form action="" class="form-horizontal"  role="form" id="rule_form">
 			        <fieldset>
 			         	<div class="form-group">
-			         		<label class="col-md-1 control-label">规则id</label>
+			         		<label class="col-md-2 control-label">规则id</label>
 			         		<div class="col-md-2">
                             <input class="form-control" type="number" placeholder="只在更新规则时填" id="input_rule_id" name="input_rule_id" autofocus maxlength="20"/>
                         	</div>
                         </div>
                         <div class="form-group">
-			         		<label class="col-md-1 control-label">对话内容</label>
+			         		<label class="col-md-2 control-label">对话内容</label>
 			         		<div class="col-md-5">
                             <input class="form-control" type="text" placeholder="对话内容" id="input_rule_text" name="input_rule_text"/>
                         	</div>
                         </div>
 
                         <div class="form-group">
-			         		<label class="col-md-1 control-label">response to</label>
+			         		<label class="col-md-2 control-label">response to</label>
 			         		<div class="col-md-5">
                             <input class="form-control" type="text" placeholder="对话内容" id="input_rule_response" name="input_rule_response"/>
                         	</div>
                         </div>
 
-                        <div class="form-group col-md-2"></div>
+                        <div class="form-group col-md-3"></div>
                         <div class="form-group col-md-1">
                         	<button id='btn6' type="button" class="btn btn-success" name="button" onclick="add_rule()">添加</button>
                     	</div>
@@ -332,58 +355,73 @@
                 }
             } );
             uname1();
-            //getAllVertifyUsers();
         }
 
         function uname1()
         {
             var b=checkName();
             if(b=="游客"){
-                window.location.href="admin_login.html";
-                alert("请先登录！");
+                //window.location.href="admin_login.html";
+                //alert("请先登录！");
             }
             $("#admin_name").append(b);
             var a=checkID();
             $("#admin_ID").append(a);
         }
 
-        function getAllVertifyUsers(){
-            thisurl=url+"admin/getAllVerifyUser";
-            
-            $.get(thisurl,function(data){
-                //alert(data);
-                var table = $('#dataTables-user').DataTable();
-                if(data==""){
-                    table.row.add(["null","null","null","null","null"]).draw();
-                }
-                else{
-                    for(var i=0;i<data.length;i++){
-                        var id=data[i].userId;
-                        var dn=data[i].userName;
+        function search_statement(){
+        	$("#dataTables-statement").DataTable().clear();
+        	var s_id=document.getElementById("search_state_id").value;
+        	var s_text=document.getElementById("search_state_text").value;
+        	var table = $('#dataTables-statement').DataTable();
+        	if(s_id==''){
+        		//alert('sid为空',ok);
+        		if(s_text==''){
+	        		//alert('stext为空',ok);
+	        		alert("id和text不能全为空");
+	        		return
+	        	}
+        	}
+        	var thisurl=url+"manager/search_statement?id="+s_id+"&text="+s_text;
+        	$.get(thisurl, function(data)
+            {
+            	var message=JSON.parse(JSON.stringify(data))
+            	//alert(data)
+                if(message.code==1){
+                	alert("成功获取"+message.number+"条数据");
+                	var statements=message.statements;
+                	if(statements==""){
+	                    table.row.add(["null","null","null","null","null"]).draw();
+	                }else{
+	                	for(var i=0;i<statements.length;i++){
 
-                        if(!id)dn="未填写";
-                        if(!dn)df="未填写";
-                        table.row.add([id,dn]).draw();
-                    }
+	                		//---看数据库命名---
+	                        var id=statements[i].userId;
+	                        var tt=statements[i].userName;
+
+	                        if(!id)dn="未填写";
+	                        if(!dn)df="未填写";
+	                        table.row.add([id,dn]).draw();
+	                        //---看数据库命名---
+
+	                    }
+	                }
+                }else{
+                	alert("没有搜索对应数据!");
                 }
             });
         }
 
-        function search_statement(){
-        	$("#dataTables-statement").DataTable().clear();
-
-        }
-
         function delete_all_statement(){
-        	s_text=document.getElementById("search_state_text").value;
+        	var s_text=document.getElementById("search_state_text").value;
         	if(s_text==''){
         		alert('无搜索文本!');
         		return 
         	}
-        	thisurl=url+"manager/delete_all_statement?text="+s_text;
+        	var thisurl=url+"manager/delete_all_statement?text="+s_text;
         	$.get(thisurl, function(data)
             {
-            	message=JSON.parse(JSON.stringify(data))
+            	var message=JSON.parse(JSON.stringify(data))
             	//alert(data)
                 if(message.code==1){
                 	alert("成功删除"+message.number+"条数据");
@@ -408,19 +446,57 @@
 
         function search_rule(){
         	$("#dataTables-rule").DataTable().clear();
-        	
+        	var r_id=document.getElementById("search_rule_id").value;
+        	var r_text=document.getElementById("search_rule_text").value;
+        	var table = $('#dataTables-rule').DataTable();
+        	if(r_id==''){
+        		//alert('sid为空',ok);
+        		if(r_text==''){
+	        		//alert('stext为空',ok);
+	        		alert("id和text不能全为空");
+	        		return
+	        	}
+        	}
+        	var thisurl=url+"manager/search_rule?id="+s_id+"&text="+s_text;
+        	$.get(thisurl, function(data)
+            {
+            	var message=JSON.parse(JSON.stringify(data))
+            	//alert(data)
+                if(message.code==1){
+                	alert("成功获取"+message.number+"条数据");
+                	var rules=message.rules;
+                	if(rules==""){
+	                    table.row.add(["null","null","null","null","null","null"]).draw();
+	                }else{
+	                	for(var i=0;i<rules.length;i++){
+
+	                		//---看数据库命名---
+	                        var id=rules[i].userId;
+	                        var tt=rules[i].userName;
+
+	                        if(!id)dn="未填写";
+	                        if(!dn)df="未填写";
+	                        table.row.add([id,dn]).draw();
+	                        //---看数据库命名---
+
+	                    }
+	                }
+                }else{
+                	alert("没有搜索对应数据!");
+                }
+            });
         }
 
         function delete_all_rule(){
-        	r_text=document.getElementById("search_rule_text").value;
+        	var r_text=document.getElementById("search_rule_text").value;
         	if(r_text==''){
         		alert('无搜索文本!');
         		return 
         	}
-        	thisurl=url+"manager/delete_all_rule?text="+r_text;
+        	var thisurl=url+"manager/delete_all_rule?text="+r_text;
         	$.get(thisurl, function(data)
             {
-            	message=JSON.parse(JSON.stringify(data))
+            	var message=JSON.parse(JSON.stringify(data))
             	//alert(data)
                 if(message.code==1){
                 	alert("成功删除"+message.number+"条数据");
