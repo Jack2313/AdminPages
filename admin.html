@@ -2,6 +2,7 @@
 <html>
     <head><title>WeChatterBot后端管理平台</title>
         <meta charset="utf-8"> 
+        <meta http-equiv="Access-Control-Allow-Origin" content="*" />
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.js"></script>
@@ -137,7 +138,7 @@
             </div>
 
             <div class="container">
-			    <form action="" class="form-horizontal"  role="form" id="statement_form">
+			    <form class="form-horizontal"  role="form" id="statement_form">
 			        <fieldset>
 			         	<div class="form-group">
 			         		<label class="col-md-2 control-label">对话id</label>
@@ -433,10 +434,78 @@
         }
 
         function add_statement(){
+        	var s_text = document.getElementById("input_state_text").value;
+        	var s_response = document.getElementById("input_state_response").value;
+        	var s_search_text = document.getElementById("input_state_search_text").value;
+        	var s_search_response = document.getElementById("input_state_search_response").value;
+        	var s_tags = document.getElementById("input_state_tags").value;
 
+        	if(s_text==''){
+        		alert("新建对话时text项不能为空！");
+        		return;
+        	}
+        	if(s_response==''){
+        		alert("新建对话时response项不能为空！");
+        		return;
+        	}
+        	if(s_search_text==''){
+        		alert("新建对话时search_text项不能为空！");
+        		return;
+        	}
+        	if(s_search_response==''){
+        		alert("新建对话时search_response项不能为空！");
+        		return;
+        	}
+
+        	///*
+        	var statement = {
+        		//注意项名要根据Statement的具体要求
+        		"text": s_text,
+        		"response": s_response,
+        		"tags": s_tags,
+        		"search_text": s_search_text,
+        		"search_response": s_search_response
+        	}
+        	//*/
+
+        	//var statement = $('#statement_form').serialize();
+
+        	statement = JSON.stringify(statement)
+
+        	var settings = {
+		        type: "POST",
+		        url: url+"manager/create_statement",
+		        data: statement,
+		        error: function(XHR,textStatus,errorThrown) {
+		            alert("error!");
+					alert(errorThrown);
+		        },
+		        success: function(data,textStatus) {			        	
+					if(data=='')
+					{
+						alert("创建对话返回数据错误");
+					}
+					else
+					{
+						alert("创建成功！");
+						//window.location.href='main.html';
+					}
+		        },
+		        headers: {
+		            "Content-Type":"text/plain"
+		        }
+		   	};
+		   	$.ajax(settings);
         }
 
         function update_statement(){
+        	var s_id = document.getElementById("input_state_id").value;
+        	var s_text = document.getElementById("input_state_text").value;
+        	var s_response = document.getElementById("input_state_response").value;
+        	var s_search_text = document.getElementById("input_state_search_text").value;
+        	var s_search_response = document.getElementById("input_state_search_response").value;
+        	var s_tags = document.getElementById("input_state_tags").value;
+
 
         }
 
