@@ -81,10 +81,10 @@
             var admin_ID = document.getElementById("username").value;
             var admin_Password = document.getElementById("password").value;
 
-            $.get(url+"/manager/login?username="+admin_ID+"&password="+admin_Password,function(data)
+            $.get(url+"/admin/login?username="+admin_ID+"&password="+admin_Password,function(data)
             {
             	//alert(JSON.stringify(data))
-            	message=JSON.parse(JSON.stringify(data))
+            	var message=JSON.parse(JSON.stringify(data))
             	//alert(data)
                 if(message.code==1)
                 {
