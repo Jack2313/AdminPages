@@ -243,8 +243,9 @@
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-rule">
                                 <thead>
                                     <tr>
-                                        <th>用户id</th>
-                                        <th>用户名</th>
+                                        <th>id</th>
+                                        <th>search_text</th>
+                                        <th>search_response</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -277,14 +278,14 @@
                         	</div>
                         </div>
                         <div class="form-group">
-			         		<label class="col-md-2 control-label">对话内容</label>
+			         		<label class="col-md-2 control-label">search_text</label>
 			         		<div class="col-md-5">
                             <input class="form-control" type="text" placeholder="对话内容" id="input_rule_text" name="input_rule_text"/>
                         	</div>
                         </div>
 
                         <div class="form-group">
-			         		<label class="col-md-2 control-label">response to</label>
+			         		<label class="col-md-2 control-label">search_response</label>
 			         		<div class="col-md-5">
                             <input class="form-control" type="text" placeholder="对话内容" id="input_rule_response" name="input_rule_response"/>
                         	</div>
@@ -616,11 +617,105 @@
         }
 
         function add_rule(){
+        	var r_text = document.getElementById("input_rule_text").value;
+        	var r_response = document.getElementById("input_rule_response").value;
+        	
 
+        	if(r_text==''){
+        		alert("新建规则时text项不能为空！");
+        		return;
+        	}
+        	if(r_response==''){
+        		alert("新建规则时response项不能为空！");
+        		return;
+        	}
+
+        	///*
+        	var rule = {
+        		//注意项名要根据Statement的具体要求
+        		"text": r_text,
+        		"response": r_response,
+        	}
+        	//*/
+
+        	//var statement = $('#statement_form').serialize();
+
+        	rule = JSON.stringify(rule)
+
+        	var settings = {
+		        type: "POST",
+		        url: url+"admin/create_rule",
+		        data: rule,
+		        error: function(XHR,textStatus,errorThrown) {
+		            alert("error!");
+					alert(errorThrown);
+		        },
+		        success: function(data,textStatus) {			        	
+					if(data=='')
+					{
+						alert("创建规则返回数据错误");
+					}
+					else
+					{
+						alert("创建成功！");
+						//window.location.href='main.html';
+					}
+		        },
+		        headers: {
+		            "Content-Type":"text/plain"
+		        }
+		   	};
+		   	$.ajax(settings);
         }
 
         function update_rule(){
+        	var r_text = document.getElementById("input_rule_text").value;
+        	var r_response = document.getElementById("input_rule_response").value;
+        	var r_id = document.getElementById("input_rule_id").value;
+        	
 
+        	if(r_id==''){
+        		alert("更新规则时id项不能为空！");
+        		return;
+        	}
+
+        	///*
+        	var rule = {
+        		//注意项名要根据Statement的具体要求
+        		"id": r_id,
+        		"text": r_text,
+        		"response": r_response,
+        	}
+        	//*/
+
+        	//var statement = $('#statement_form').serialize();
+
+        	rule = JSON.stringify(rule)
+
+        	var settings = {
+		        type: "POST",
+		        url: url+"admin/update_rule",
+		        data: rule,
+		        error: function(XHR,textStatus,errorThrown) {
+		            alert("error!");
+					alert(errorThrown);
+		        },
+		        success: function(data,textStatus) {			        	
+					if(data=='')
+					{
+						alert("更新规则返回数据错误");
+					}
+					else
+					{
+						alert("更新成功！");
+						//window.location.href='main.html';
+					}
+		        },
+		        headers: {
+		            "Content-Type":"text/plain"
+		        }
+		   	};
+		   	$.ajax(settings);
         }
 
         function delete_input_rule(){

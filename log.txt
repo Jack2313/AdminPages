@@ -1,0 +1,35 @@
+commit c026f2775b36c8f7af0a7c53e023649123c7684d
+Author: Jack2313 <570055398@qq.com>
+Date:   Tue Apr 21 14:14:30 2020 +0800
+
+    4.21 完成对话更新，修改端口url
+
+commit f125e1802c057ed555a98ce559fefe13d553555e
+Author: Jack2313 <570055398@qq.com>
+Date:   Thu Apr 16 16:22:53 2020 +0800
+
+    4.16 完成添加对话方法并进行连接测试
+
+commit 73d024bd05dd67acf4e04d7f779766e5f7e04988
+Author: Jack2313 <570055398@qq.com>
+Date:   Wed Apr 15 23:53:19 2020 +0800
+
+    4.16 修改页面构建，完成删除方法
+
+commit a03a62bb9d2cf8295dbf4474f0769f55262a7360
+Author: Jack2313 <570055398@qq.com>
+Date:   Wed Apr 15 13:07:26 2020 +0800
+
+    4.15 完成页面构建
+
+commit dc43bc180f593422b169c3a387343a7a2c30342c
+Author: Jack2313 <570055398@qq.com>
+Date:   Tue Apr 14 15:18:45 2020 +0800
+
+    4.14 完成基本网页框架
+
+commit 863a05cb50f638b379f604e11e58b5e58df07002
+Author: J.Jiang.K <570055398@qq.com>
+Date:   Fri Apr 10 18:31:04 2020 +0800
+
+    Initial commit
