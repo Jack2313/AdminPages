@@ -163,14 +163,14 @@
                         <div class="form-group">
 			         		<label class="col-md-2 control-label">search_text</label>
 			         		<div class="col-md-5">
-                            <input class="form-control" type="text" placeholder="search_text" id="input_state_search_text"/>
+                            <input class="form-control" type="text" placeholder="search_text" id="input_state_search_text" disabled="true"/>
                         	</div>
                         </div>
 
                         <div class="form-group">
 			         		<label class="col-md-2 control-label">search_response</label>
 			         		<div class="col-md-5">
-                            <input class="form-control" type="text" placeholder="search_response" id="input_state_search_response"/>
+                            <input class="form-control" type="text" placeholder="search_response" id="input_state_search_response"  disabled="true"/>
                         	</div>
                         </div>
 
@@ -437,8 +437,8 @@
         function add_statement(){
         	var s_text = document.getElementById("input_state_text").value;
         	var s_response = document.getElementById("input_state_response").value;
-        	var s_search_text = document.getElementById("input_state_search_text").value;
-        	var s_search_response = document.getElementById("input_state_search_response").value;
+        	//var s_search_text = document.getElementById("input_state_search_text").value;
+        	//var s_search_response = document.getElementById("input_state_search_response").value;
         	var s_tags = document.getElementById("input_state_tags").value;
 
         	if(s_text==''){
@@ -449,6 +449,8 @@
         		alert("新建对话时response项不能为空！");
         		return;
         	}
+
+        	/*
         	if(s_search_text==''){
         		alert("新建对话时search_text项不能为空！");
         		return;
@@ -457,6 +459,7 @@
         		alert("新建对话时search_response项不能为空！");
         		return;
         	}
+        	*/
 
         	///*
         	var statement = {
@@ -464,8 +467,8 @@
         		"text": s_text,
         		"response": s_response,
         		"tags": s_tags,
-        		"search_text": s_search_text,
-        		"search_response": s_search_response
+        		//"search_text": s_search_text,
+        		//"search_response": s_search_response
         	}
         	//*/
 
@@ -503,8 +506,8 @@
         	var s_id = document.getElementById("input_state_id").value;
         	var s_text = document.getElementById("input_state_text").value;
         	var s_response = document.getElementById("input_state_response").value;
-        	var s_search_text = document.getElementById("input_state_search_text").value;
-        	var s_search_response = document.getElementById("input_state_search_response").value;
+        	//var s_search_text = document.getElementById("input_state_search_text").value;
+        	//var s_search_response = document.getElementById("input_state_search_response").value;
         	var s_tags = document.getElementById("input_state_tags").value;
 
         	if(s_id==''){
@@ -519,8 +522,8 @@
         		"text": s_text,
         		"response": s_response,
         		"tags": s_tags,
-        		"search_text": s_search_text,
-        		"search_response": s_search_response
+        		//"search_text": s_search_text,
+        		//"search_response": s_search_response
         	}
 
         	var settings = {
