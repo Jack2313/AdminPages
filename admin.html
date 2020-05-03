@@ -91,7 +91,7 @@
 
                     	</div>
                     	<div class="form-group col-md-1">
-                    		<button id='btn2' type="button" class="btn btn-danger" onclick="delete_all_statement()">删除含text的对话</button>
+                    		<button id='btn2' type="button" class="btn btn-danger" onclick="delete_all_statement()" disabled="true">删除含text的对话</button>
                     	</div>
 
 			        </fieldset>
@@ -114,7 +114,7 @@
                                         <th>response</th>
                                         <th>search_text</th>
                                         <th>search_response</th>
-                                        <th>tag</th>
+                                        <th>tags</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -160,19 +160,6 @@
                         	</div>
                         </div>
 
-                        <div class="form-group">
-			         		<label class="col-md-2 control-label">search_text</label>
-			         		<div class="col-md-5">
-                            <input class="form-control" type="text" placeholder="search_text" id="input_state_search_text" disabled="true"/>
-                        	</div>
-                        </div>
-
-                        <div class="form-group">
-			         		<label class="col-md-2 control-label">search_response</label>
-			         		<div class="col-md-5">
-                            <input class="form-control" type="text" placeholder="search_response" id="input_state_search_response"  disabled="true"/>
-                        	</div>
-                        </div>
 
                         <div class="form-group">
 			         		<label class="col-md-2 control-label">tags</label>
@@ -225,7 +212,7 @@
 
                     	</div>
                     	<div class="form-group col-md-1">
-                    		<button id='btn7' type="button" class="btn btn-danger" onclick="delete_all_rule()">删除含text的规则</button>
+                    		<button id='btn7' type="button" class="btn btn-danger" onclick="delete_all_rule()" disabled="true">删除含text的规则</button>
                     	</div>
 
 			        </fieldset>
@@ -280,14 +267,14 @@
                         <div class="form-group">
 			         		<label class="col-md-2 control-label">search_text</label>
 			         		<div class="col-md-5">
-                            <input class="form-control" type="text" placeholder="对话内容" id="input_rule_text" name="input_rule_text"/>
+                            <input class="form-control" type="text" placeholder="必填" id="input_rule_text" name="input_rule_text"/>
                         	</div>
                         </div>
 
                         <div class="form-group">
 			         		<label class="col-md-2 control-label">search_response</label>
 			         		<div class="col-md-5">
-                            <input class="form-control" type="text" placeholder="对话内容" id="input_rule_response" name="input_rule_response"/>
+                            <input class="form-control" type="text" placeholder="必填" id="input_rule_response" name="input_rule_response"/>
                         	</div>
                         </div>
 
@@ -336,6 +323,9 @@
             $("#dataTables-statement").DataTable().on("select", function () {
 
                 var s=table1.row({ selected: true }).data();
+                if(s[0]=='null'){
+                	return
+                }
                 returnValue = confirm("确认删除这条对话吗？");
                 if(returnValue==true){
                     confirm_url=url+"admin/delete_statement?sid="+s[0];
@@ -348,6 +338,9 @@
             $("#dataTables-rule").DataTable().on("select", function () {
 
                 var s=table2.row({ selected: true }).data();
+                if(s[0]=='null'){
+                	return
+                }
                 returnValue = confirm("确认删除这条规则吗？");
                 if(returnValue==true){
                     confirm_url=url+"admin/delete_rule?rid="+s[0];
@@ -389,27 +382,37 @@
             {
             	var message=JSON.parse(JSON.stringify(data))
             	//alert(data)
-                if(message.code==1){
-                	alert("成功获取"+message.number+"条数据");
+                if(message.code==1 && message.number>0){
+                	//alert("成功获取"+message.number+"条数据");
                 	var statements=message.statements;
                 	if(statements==""){
-	                    table.row.add(["null","null","null","null","null"]).draw();
+	                    table.row.add(["null","null","null","null","null","null"]).draw();
 	                }else{
 	                	for(var i=0;i<statements.length;i++){
 
 	                		//---看数据库命名---
-	                        var id=statements[i].userId;
-	                        var tt=statements[i].userName;
+	                        var id=statements[i].id;
+	                        var text=statements[i].text;
+	                        var res=statements[i].in_response_to;
+	                        var s_text=statements[i].search_text;
+	                        //alert(s_text);
+	                        var s_res=statements[i].search_in_response_to;
+	                        var tags=statements[i].tags;
 
-	                        if(!id)dn="未填写";
-	                        if(!dn)df="未填写";
-	                        table.row.add([id,dn]).draw();
+	                        if(!id)id="未填写";
+	                        if(!text)text="未填写";
+	                        if(!res)res="未填写";
+	                        if(!s_text)s_text="未填写";
+	                        if(!s_res)s_res="未填写";
+	                        if(!tags)tags="未填写";
+	                        table.row.add([id,text,res,s_text,s_res,tags]).draw();
 	                        //---看数据库命名---
 
 	                    }
 	                }
                 }else{
-                	alert("没有搜索对应数据!");
+                	alert("没有搜索到数据!");
+                	table.row.add(["null","null","null","null","null","null"]).draw();
                 }
             });
         }
@@ -425,7 +428,7 @@
             {
             	var message=JSON.parse(JSON.stringify(data))
             	//alert(data)
-                if(message.code==1){
+                if(message.code==1 && message.number>0){
                 	alert("成功删除"+message.number+"条数据");
                 	$("#dataTables-statement").DataTable().clear();
                 }else{
@@ -500,6 +503,7 @@
 		        }
 		   	};
 		   	$.ajax(settings);
+		   	delete_input_statement();
         }
 
         function update_statement(){
@@ -514,6 +518,14 @@
         		alert("更新对话时id项不能为空！");
         		return;
         	}
+        	if(s_text==''){
+        		alert("更新对话时text项不能为空！");
+        		return;
+        	}
+        	if(s_response==''){
+        		alert("更新对话时response项不能为空！");
+        		return;
+        	}
 
         	var statement = {
         		//注意项名要根据Statement的具体要求
@@ -525,10 +537,11 @@
         		//"search_text": s_search_text,
         		//"search_response": s_search_response
         	}
+        	statement = JSON.stringify(statement)
 
         	var settings = {
 		        type: "POST",
-		        url: url+"admin/create_statement",
+		        url: url+"admin/update_statement",
 		        data: statement,
 		        error: function(XHR,textStatus,errorThrown) {
 		            alert("error!");
@@ -569,32 +582,39 @@
 	        		return
 	        	}
         	}
-        	var thisurl=url+"admin/search_rule?id="+s_id+"&text="+s_text;
+        	var thisurl=url+"admin/search_rule?id="+r_id+"&text="+r_text;
         	$.get(thisurl, function(data)
             {
             	var message=JSON.parse(JSON.stringify(data))
             	//alert(data)
-                if(message.code==1){
-                	alert("成功获取"+message.number+"条数据");
+                if(message.code==1 && message.number>0){
+                	//alert("成功获取"+message.number+"条数据");
                 	var rules=message.rules;
                 	if(rules==""){
-	                    table.row.add(["null","null","null","null","null","null"]).draw();
+	                    table.row.add(["null","null","null"]).draw();
 	                }else{
 	                	for(var i=0;i<rules.length;i++){
 
 	                		//---看数据库命名---
-	                        var id=rules[i].userId;
-	                        var tt=rules[i].userName;
+	                        var id=rules[i].id;
+	                        //var text=statements[i].text;
+	                        //var res=statements[i].in_response_to;
+	                        var s_text=rules[i].search_text;
+	                        var s_res=rules[i].search_in_response_to;
 
-	                        if(!id)dn="未填写";
-	                        if(!dn)df="未填写";
-	                        table.row.add([id,dn]).draw();
+	                        if(!id)id="未填写";
+	                        //if(!text)text="未填写";
+	                        //if(!res)res="未填写";
+	                        if(!s_text)s_text="未填写";
+	                        if(!s_res)s_res="未填写";
+	                        table.row.add([id,s_text,s_res]).draw();
 	                        //---看数据库命名---
 
 	                    }
 	                }
                 }else{
                 	alert("没有搜索对应数据!");
+                	table.row.add(["null","null","null"]).draw();
                 }
             });
         }
@@ -610,7 +630,7 @@
             {
             	var message=JSON.parse(JSON.stringify(data))
             	//alert(data)
-                if(message.code==1){
+                if(message.code==1 && message.number>0){
                 	alert("成功删除"+message.number+"条数据");
                 	$("#dataTables-rule").DataTable().clear();
                 }else{
@@ -625,11 +645,11 @@
         	
 
         	if(r_text==''){
-        		alert("新建规则时text项不能为空！");
+        		alert("新建规则时search_text项不能为空！");
         		return;
         	}
         	if(r_response==''){
-        		alert("新建规则时response项不能为空！");
+        		alert("新建规则时search_response项不能为空！");
         		return;
         	}
 
@@ -669,6 +689,7 @@
 		        }
 		   	};
 		   	$.ajax(settings);
+		   	delete_input_rule();
         }
 
         function update_rule(){
@@ -679,6 +700,14 @@
 
         	if(r_id==''){
         		alert("更新规则时id项不能为空！");
+        		return;
+        	}
+        	if(r_text==''){
+        		alert("更新规则时search_text项不能为空！");
+        		return;
+        	}
+        	if(r_response==''){
+        		alert("更新规则时search_response项不能为空！");
         		return;
         	}
 
