@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -69,36 +69,49 @@
         var url="http://localhost:5000";
         function onload()
         {   
-
             var a = document.getElementById("Login");//获取div块对象   
             var Height=document.documentElement.clientHeight;//取得浏览器页面可视区域的宽度   
             var Width=document.documentElement.clientWidth;//取得浏览器页面可视区域的宽度   
             var div_height = a.offsetHeight;//获取div块的高度值   
             document.getElementById("center").style.height= (Height - div_height)/3+"px";   
         }
+        function writeObj(obj){ 
+            var description = ""; 
+            for(var i in obj){ 
+            var property=obj[i]; 
+            description+=i+" = "+property+"\n"; 
+            } 
+            alert(description); 
+        }
+        function unicode2Chr(str) {
+            return unescape(str.replace(/\\/g, "%"))
+        }
         function doPost()
         {
             var admin_ID = document.getElementById("username").value;
             var admin_Password = document.getElementById("password").value;
 
-            $.get(url+"/admin/login?username="+admin_ID+"&password="+admin_Password,function(data)
-            {
-            	//alert(JSON.stringify(data))
-            	var message=JSON.parse(JSON.stringify(data))
-            	//alert(data)
-                if(message.code==1)
-                {
-                	setCookie("adminName", admin_ID, 1);
-                	setCookie("adminID", 1, 1);
+            var settings = {
+                type: "GET",
+                url: url+"/admin/login?username="+admin_ID+"&password="+admin_Password,
+                error: function(XHR,textStatus,errorThrown) {
+                    var message=JSON.parse(JSON.stringify(XHR))
+                    alert(message['responseText'])
+                },
+                success: function(data,textStatus) {                        
+                    var message=JSON.parse(data)
+                    //alert(message.username);
+                    setCookie("adminName", message.username, 1);
+                    setCookie("adminID", message.userId, 1);
                     alert("登陆成功！");
                     window.location.href="admin.html";
+                },
+                headers: {
+                    "Content-Type":"text/plain"
                 }
-                else
-                {
-                    alert("用户名或密码不正确，或没有管理员权限!");
-                }
-                //alert(document.cookie);
-            });
+            };
+
+            $.ajax(settings);
         }
 
         function setCookie(cname, cvalue, exdays) {

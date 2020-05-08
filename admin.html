@@ -320,6 +320,7 @@
                 pageLength: 10,
                 pagingType: 'simple'
             });
+
             $("#dataTables-statement").DataTable().on("select", function () {
 
                 var s=table1.row({ selected: true }).data();
@@ -329,9 +330,22 @@
                 returnValue = confirm("确认删除这条对话吗？");
                 if(returnValue==true){
                     confirm_url=url+"admin/delete_statement?sid="+s[0];
-                    $.get(confirm_url);
-                    alert("删除成功！");
-                    search_statement();
+                    var settings = {
+                        type: "GET",
+                        url: confirm_url,
+                        error: function(XHR,textStatus,errorThrown) {
+                            var message=JSON.parse(JSON.stringify(XHR))
+                            alert(message['responseText'])
+                        },
+                        success: function(data,textStatus) {
+                            alert("删除成功！");
+                        search_statement();
+                        },
+                        headers: {
+                            "Content-Type":"text/plain"
+                        }
+                    };
+                    $.ajax(settings);
                 }
             } );
 
@@ -344,9 +358,22 @@
                 returnValue = confirm("确认删除这条规则吗？");
                 if(returnValue==true){
                     confirm_url=url+"admin/delete_rule?rid="+s[0];
-                    $.get(confirm_url);
-                    alert("删除成功！");
-                    search_rule();
+                    var settings = {
+                        type: "GET",
+                        url: confirm_url,
+                        error: function(XHR,textStatus,errorThrown) {
+                            var message=JSON.parse(JSON.stringify(XHR))
+                            alert(message['responseText'])
+                        },
+                        success: function(data,textStatus) {
+                            alert("删除成功！");
+                            search_rule();
+                        },
+                        headers: {
+                            "Content-Type":"text/plain"
+                        }
+                    };
+                    $.ajax(settings);
                 }
             } );
             uname1();
@@ -378,43 +405,54 @@
 	        	}
         	}
         	var thisurl=url+"admin/search_statement?id="+s_id+"&text="+s_text;
-        	$.get(thisurl, function(data)
-            {
-            	var message=JSON.parse(JSON.stringify(data))
-            	//alert(data)
+            var settings = {
+                type: "GET",
+                url: thisurl,
+                error: function(XHR,textStatus,errorThrown) {
+                    var message=JSON.parse(JSON.stringify(XHR))
+                    alert(message['responseText'])
+                },
+                success: function(data,textStatus) {                        
+                    var message=JSON.parse(data)
+                    //alert(message.code)
                 if(message.code==1 && message.number>0){
-                	//alert("成功获取"+message.number+"条数据");
-                	var statements=message.statements;
-                	if(statements==""){
-	                    table.row.add(["null","null","null","null","null","null"]).draw();
-	                }else{
-	                	for(var i=0;i<statements.length;i++){
+                    //alert("成功获取"+message.number+"条数据");
+                    var statements=message.statements;
+                    if(statements==""){
+                        table.row.add(["null","null","null","null","null","null"]).draw();
+                    }else{
+                        for(var i=0;i<statements.length;i++){
 
-	                		//---看数据库命名---
-	                        var id=statements[i].id;
-	                        var text=statements[i].text;
-	                        var res=statements[i].in_response_to;
-	                        var s_text=statements[i].search_text;
-	                        //alert(s_text);
-	                        var s_res=statements[i].search_in_response_to;
-	                        var tags=statements[i].tags;
+                            //---看数据库命名---
+                            var id=statements[i].id;
+                            var text=statements[i].text;
+                            var res=statements[i].in_response_to;
+                            var s_text=statements[i].search_text;
+                            //alert(s_text);
+                            var s_res=statements[i].search_in_response_to;
+                            var tags=statements[i].tags;
 
-	                        if(!id)id="未填写";
-	                        if(!text)text="未填写";
-	                        if(!res)res="未填写";
-	                        if(!s_text)s_text="未填写";
-	                        if(!s_res)s_res="未填写";
-	                        if(!tags)tags="未填写";
-	                        table.row.add([id,text,res,s_text,s_res,tags]).draw();
-	                        //---看数据库命名---
+                            if(!id)id="未填写";
+                            if(!text)text="未填写";
+                            if(!res)res="未填写";
+                            if(!s_text)s_text="未填写";
+                            if(!s_res)s_res="未填写";
+                            if(!tags)tags="未填写";
+                            table.row.add([id,text,res,s_text,s_res,tags]).draw();
+                            //---看数据库命名---
 
-	                    }
-	                }
+                        }
+                    }
                 }else{
-                	alert("没有搜索到数据!");
-                	table.row.add(["null","null","null","null","null","null"]).draw();
+                    alert("没有搜索到数据!");
+                    table.row.add(["null","null","null","null","null","null"]).draw();
                 }
-            });
+                },
+                headers: {
+                    "Content-Type":"text/plain"
+                }
+            };
+            $.ajax(settings);
         }
 
         function delete_all_statement(){
@@ -479,30 +517,30 @@
 
         	statement = JSON.stringify(statement)
 
-        	var settings = {
-		        type: "POST",
-		        url: url+"admin/create_statement",
-		        data: statement,
-		        error: function(XHR,textStatus,errorThrown) {
-		            alert("error!");
-					alert(errorThrown);
-		        },
-		        success: function(data,textStatus) {			        	
-					if(data=='')
-					{
-						alert("创建对话返回数据错误");
-					}
-					else
-					{
-						alert("创建成功！");
-						//window.location.href='main.html';
-					}
-		        },
-		        headers: {
-		            "Content-Type":"text/plain"
-		        }
-		   	};
-		   	$.ajax(settings);
+            	var settings = {
+    		        type: "POST",
+    		        url: url+"admin/create_statement",
+    		        data: statement,
+    		        error: function(XHR,textStatus,errorThrown) {
+    		            var message=JSON.parse(JSON.stringify(XHR))
+                        alert(message['responseText'])
+    		        },
+    		        success: function(data,textStatus) {			        	
+    					if(data=='')
+    					{
+    						alert("创建对话返回数据错误");
+    					}
+    					else
+    					{
+    						alert("创建成功！");
+    						//window.location.href='main.html';
+    					}
+    		        },
+    		        headers: {
+    		            "Content-Type":"text/plain"
+    		        }
+    		   	};
+    		   	$.ajax(settings);
 		   	delete_input_statement();
         }
 
@@ -544,8 +582,8 @@
 		        url: url+"admin/update_statement",
 		        data: statement,
 		        error: function(XHR,textStatus,errorThrown) {
-		            alert("error!");
-					alert(errorThrown);
+		            var message=JSON.parse(JSON.stringify(XHR))
+                    alert(message['responseText'])
 		        },
 		        success: function(data,textStatus) {			        	
 					if(data=='')
@@ -583,40 +621,51 @@
 	        	}
         	}
         	var thisurl=url+"admin/search_rule?id="+r_id+"&text="+r_text;
-        	$.get(thisurl, function(data)
-            {
-            	var message=JSON.parse(JSON.stringify(data))
-            	//alert(data)
+            var settings = {
+                type: "GET",
+                url: thisurl,
+                error: function(XHR,textStatus,errorThrown) {
+                    var message=JSON.parse(JSON.stringify(XHR))
+                    alert(message['responseText'])
+                },
+                success: function(data,textStatus) {                        
+                    var message=JSON.parse(data)
+                    //alert(message.code)
                 if(message.code==1 && message.number>0){
-                	//alert("成功获取"+message.number+"条数据");
-                	var rules=message.rules;
-                	if(rules==""){
-	                    table.row.add(["null","null","null"]).draw();
-	                }else{
-	                	for(var i=0;i<rules.length;i++){
+                    //alert("成功获取"+message.number+"条数据");
+                    var rules=message.rules;
+                    if(rules==""){
+                        table.row.add(["null","null","null"]).draw();
+                    }else{
+                        for(var i=0;i<rules.length;i++){
 
-	                		//---看数据库命名---
-	                        var id=rules[i].id;
-	                        //var text=statements[i].text;
-	                        //var res=statements[i].in_response_to;
-	                        var s_text=rules[i].search_text;
-	                        var s_res=rules[i].search_in_response_to;
+                            //---看数据库命名---
+                            var id=rules[i].id;
+                            //var text=statements[i].text;
+                            //var res=statements[i].in_response_to;
+                            var s_text=rules[i].search_text;
+                            var s_res=rules[i].search_in_response_to;
 
-	                        if(!id)id="未填写";
-	                        //if(!text)text="未填写";
-	                        //if(!res)res="未填写";
-	                        if(!s_text)s_text="未填写";
-	                        if(!s_res)s_res="未填写";
-	                        table.row.add([id,s_text,s_res]).draw();
-	                        //---看数据库命名---
+                            if(!id)id="未填写";
+                            //if(!text)text="未填写";
+                            //if(!res)res="未填写";
+                            if(!s_text)s_text="未填写";
+                            if(!s_res)s_res="未填写";
+                            table.row.add([id,s_text,s_res]).draw();
+                            //---看数据库命名---
 
-	                    }
-	                }
+                        }
+                    }
                 }else{
-                	alert("没有搜索对应数据!");
-                	table.row.add(["null","null","null"]).draw();
+                    alert("没有搜索对应数据!");
+                    table.row.add(["null","null","null"]).draw();
                 }
-            });
+                },
+                headers: {
+                    "Content-Type":"text/plain"
+                }
+            };
+            $.ajax(settings);
         }
 
         function delete_all_rule(){
@@ -670,8 +719,8 @@
 		        url: url+"admin/create_rule",
 		        data: rule,
 		        error: function(XHR,textStatus,errorThrown) {
-		            alert("error!");
-					alert(errorThrown);
+		            var message=JSON.parse(JSON.stringify(XHR))
+                    alert(message['responseText'])
 		        },
 		        success: function(data,textStatus) {			        	
 					if(data=='')
@@ -729,8 +778,8 @@
 		        url: url+"admin/update_rule",
 		        data: rule,
 		        error: function(XHR,textStatus,errorThrown) {
-		            alert("error!");
-					alert(errorThrown);
+		            var message=JSON.parse(JSON.stringify(XHR))
+                    alert(message['responseText'])
 		        },
 		        success: function(data,textStatus) {			        	
 					if(data=='')
@@ -782,7 +831,7 @@
         /***/function logout() 
         /***/{
         /***/    setCookie("userId", "", -1);
-        /***/    setCookie("type","",-1)
+        /***/    setCookie("adminName","",-1)
         /***/    location.reload();
         /***/}
         /***/function checkName()
