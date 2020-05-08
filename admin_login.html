@@ -99,7 +99,7 @@
                     alert(message['responseText'])
                 },
                 success: function(data,textStatus) {                        
-                    var message=JSON.parse(data)
+                    var message=JSON.parse(JSON.stringify(data))
                     //alert(message.username);
                     setCookie("adminName", message.username, 1);
                     setCookie("adminID", message.userId, 1);
@@ -107,7 +107,7 @@
                     window.location.href="admin.html";
                 },
                 headers: {
-                    "Content-Type":"text/plain"
+                    "Content-Type":"application/json"
                 }
             };
 

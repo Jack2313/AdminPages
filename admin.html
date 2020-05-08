@@ -342,7 +342,7 @@
                         search_statement();
                         },
                         headers: {
-                            "Content-Type":"text/plain"
+                            "Content-Type":"application/json"
                         }
                     };
                     $.ajax(settings);
@@ -370,7 +370,7 @@
                             search_rule();
                         },
                         headers: {
-                            "Content-Type":"text/plain"
+                            "Content-Type":"application/json"
                         }
                     };
                     $.ajax(settings);
@@ -413,7 +413,7 @@
                     alert(message['responseText'])
                 },
                 success: function(data,textStatus) {                        
-                    var message=JSON.parse(data)
+                    var message=JSON.parse(JSON.stringify(data))
                     //alert(message.code)
                 if(message.code==1 && message.number>0){
                     //alert("成功获取"+message.number+"条数据");
@@ -449,7 +449,7 @@
                 }
                 },
                 headers: {
-                    "Content-Type":"text/plain"
+                    "Content-Type":"application/json"
                 }
             };
             $.ajax(settings);
@@ -537,7 +537,7 @@
     					}
     		        },
     		        headers: {
-    		            "Content-Type":"text/plain"
+    		            "Content-Type":"application/json"
     		        }
     		   	};
     		   	$.ajax(settings);
@@ -597,7 +597,7 @@
 					}
 		        },
 		        headers: {
-		            "Content-Type":"text/plain"
+		            "Content-Type":"application/json"
 		        }
 		   	};
 		   	$.ajax(settings);
@@ -629,7 +629,7 @@
                     alert(message['responseText'])
                 },
                 success: function(data,textStatus) {                        
-                    var message=JSON.parse(data)
+                    var message=JSON.parse(JSON.stringify(data))
                     //alert(message.code)
                 if(message.code==1 && message.number>0){
                     //alert("成功获取"+message.number+"条数据");
@@ -662,7 +662,7 @@
                 }
                 },
                 headers: {
-                    "Content-Type":"text/plain"
+                    "Content-Type":"application/json"
                 }
             };
             $.ajax(settings);
@@ -734,7 +734,7 @@
 					}
 		        },
 		        headers: {
-		            "Content-Type":"text/plain"
+		            "Content-Type":"application/json"
 		        }
 		   	};
 		   	$.ajax(settings);
@@ -793,7 +793,7 @@
 					}
 		        },
 		        headers: {
-		            "Content-Type":"text/plain"
+		            "Content-Type":"application/json"
 		        }
 		   	};
 		   	$.ajax(settings);
