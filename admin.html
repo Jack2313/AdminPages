@@ -36,7 +36,8 @@
                     </div>
                     <div style="margin-right:10%">
                         <ul class="nav navbar-nav navbar-left">  
-                            <li class="active"><a href="#">管理员登录界面</a></li>
+                            <li class="active"><a href="#">管理员界面</a></li>
+                            <li><a href="#" onclick="logout()">管理员登出</a></li>
                         </ul>
                     </div>
                 </div>
@@ -304,7 +305,7 @@
     </body>
         <script>
         var url="https://chatterbot.yuanw.wang/api/";
-        //"http://localhost:5000/";
+        //var url="http://localhost:5000/";
         window.onload=function(){
             var table1=$('#dataTables-statement').DataTable({
                 searching: false,
@@ -330,7 +331,9 @@
                 }
                 returnValue = confirm("确认删除这条对话吗？");
                 if(returnValue==true){
-                    confirm_url=url+"admin/delete_statement?sid="+s[0];
+                    confirm_url=url+"admin/delete_statement?sid="+s[0]+
+                        "&username="+getCookie("adminName")+
+                        "&token="+getCookie("token");
                     var settings = {
                         type: "GET",
                         url: confirm_url,
@@ -340,7 +343,7 @@
                         },
                         success: function(data,textStatus) {
                             alert("删除成功！");
-                        search_statement();
+                            search_statement();
                         },
                         headers: {
                             "Content-Type":"application/json"
@@ -358,7 +361,9 @@
                 }
                 returnValue = confirm("确认删除这条规则吗？");
                 if(returnValue==true){
-                    confirm_url=url+"admin/delete_rule?rid="+s[0];
+                    confirm_url=url+"admin/delete_rule?rid="+s[0]+
+                        "&username="+getCookie("adminName")+
+                        "&token="+getCookie("token");
                     var settings = {
                         type: "GET",
                         url: confirm_url,
@@ -377,7 +382,8 @@
                     $.ajax(settings);
                 }
             } );
-            uname1();
+            check_user();
+            //uname1();
         }
 
         function filterXSS(str) {
@@ -398,16 +404,38 @@
             else return false;
         }
 
-        function uname1()
-        {
+        function check_user(){
             var b=checkName();
             if(b=="游客"){
                 window.location.href="admin_login.html";
                 alert("请先登录！");
             }
-            $("#admin_name").append(b);
-            var a=checkID();
-            $("#admin_ID").append(a);
+            var token = getCookie("token")
+            user = {
+                "username": b,
+                "token": token,
+            }
+            user = JSON.stringify(user);
+            var settings = {
+                type: "POST",
+                url: url+"admin/certify",
+                data: user,
+                error: function(XHR,textStatus,errorThrown) {
+                    var message=JSON.parse(JSON.stringify(XHR));
+                    alert(message['responseText']);
+                    logout();
+                    window.location.href="admin_login.html";
+                },
+                success: function(data,textStatus) {                        
+                    $("#admin_name").append(b);
+                    var a=getCookie("adminID");
+                    $("#admin_ID").append(a);
+                },
+                headers: {
+                    "Content-Type":"application/json"
+                }
+            };
+            $.ajax(settings);
         }
 
         function search_statement(){
@@ -429,7 +457,9 @@
 	        		return
 	        	}
         	}
-        	var thisurl=url+"admin/search_statement?id="+s_id+"&text="+s_text;
+        	var thisurl=url+"admin/search_statement?id="+s_id+"&text="+s_text+
+                        "&username="+getCookie("adminName")+
+                        "&token="+getCookie("token");
             var settings = {
                 type: "GET",
                 url: thisurl,
@@ -506,6 +536,8 @@
         	//var s_search_text = document.getElementById("input_state_search_text").value;
         	//var s_search_response = document.getElementById("input_state_search_response").value;
         	var s_tags = document.getElementById("input_state_tags").value;
+            var username=getCookie("adminName");
+            var token=getCookie("token");
 
         	if(s_text==''){
         		alert("新建对话时text项不能为空！");
@@ -540,6 +572,8 @@
         		"text": s_text,
         		"response": s_response,
         		"tags": s_tags,
+                "username": username,
+                "token": token
         		//"search_text": s_search_text,
         		//"search_response": s_search_response
         	}
@@ -583,6 +617,8 @@
         	//var s_search_text = document.getElementById("input_state_search_text").value;
         	//var s_search_response = document.getElementById("input_state_search_response").value;
         	var s_tags = document.getElementById("input_state_tags").value;
+            var username=getCookie("adminName");
+            var token=getCookie("token");
 
         	if(s_id==''){
         		alert("更新对话时id项不能为空！");
@@ -611,6 +647,8 @@
         		"text": s_text,
         		"response": s_response,
         		"tags": s_tags,
+                "username": username,
+                "token": token
         		//"search_text": s_search_text,
         		//"search_response": s_search_response
         	}
@@ -665,7 +703,9 @@
 	        		return
 	        	}
         	}
-        	var thisurl=url+"admin/search_rule?id="+r_id+"&text="+r_text;
+        	var thisurl=url+"admin/search_rule?id="+r_id+"&text="+r_text+
+                        "&username="+getCookie("adminName")+
+                        "&token="+getCookie("token");
             var settings = {
                 type: "GET",
                 url: thisurl,
@@ -736,6 +776,8 @@
         function add_rule(){
         	var r_text = document.getElementById("input_rule_text").value;
         	var r_response = document.getElementById("input_rule_response").value;
+            var username=getCookie("adminName");
+            var token=getCookie("token");
         	
 
         	if(r_text==''){
@@ -759,6 +801,8 @@
         		//注意项名要根据Statement的具体要求
         		"text": r_text,
         		"response": r_response,
+                "username": username,
+                "token": token
         	}
         	//*/
 
@@ -797,6 +841,8 @@
         	var r_text = document.getElementById("input_rule_text").value;
         	var r_response = document.getElementById("input_rule_response").value;
         	var r_id = document.getElementById("input_rule_id").value;
+            var username=getCookie("adminName");
+            var token=getCookie("token");
         	
 
         	if(r_id==''){
@@ -825,6 +871,8 @@
         		"id": r_id,
         		"text": r_text,
         		"response": r_response,
+                "username": username,
+                "token": token
         	}
         	//*/
 
@@ -890,10 +938,11 @@
         /***/function logout() 
         /***/{
         /***/    setCookie("userId", "", -1);
-        /***/    setCookie("adminName","",-1)
+        /***/    setCookie("adminName","",-1);
+                 setCookie("token","",-1)
         /***/    location.reload();
         /***/}
-        /***/function checkName()
+        /***/function checkName(s)
         /***/{
         /***/    var adminName = getCookie("adminName");
         /***/    //alert("userid"+userid+"  type"+type);
@@ -907,11 +956,6 @@
         /***/        return adminName;                
         /***/   }
         /***/}
-
-        function checkID(){
-        	var adminID=getCookie("adminID");
-        	return adminID;
-        }
         
         </script>
         

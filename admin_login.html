@@ -67,7 +67,7 @@
 
     <script type="text/javascript">
         var url="https://chatterbot.yuanw.wang/api"
-        //"http://localhost:5000";
+        //var url="http://localhost:5000";
 
         function filterXSS(str) {
             return str
@@ -128,7 +128,8 @@
                     //alert(message.username);
                     setCookie("adminName", message.username, 1);
                     setCookie("adminID", message.userId, 1);
-                    alert("登陆成功！");
+                    setCookie("token", message.token, 1);
+                    alert("登录成功！");
                     window.location.href="admin.html";
                 },
                 headers: {
