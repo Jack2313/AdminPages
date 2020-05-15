@@ -384,7 +384,7 @@
         function filterXSS(str) {
             return str
               .replace(/&/g, '&amp;')
-              .replace(/ /g, '&nbsp;')
+              //.replace(/ /g, '&nbsp;')
               .replace(/</g, '&lt;')
               .replace(/>/g, '&gt;')
               .replace(/"/g, '&quot;')
@@ -395,7 +395,8 @@
             var pattern1 = /alert\(/;
             var pattern2 = /eval\(/;
             if(str.search(pattern1)!=-1 || str.search(pattern2)!=-1)
-                return true;
+                //return true;
+            	return false;
             else return false;
         }
 
