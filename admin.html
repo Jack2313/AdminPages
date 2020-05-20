@@ -299,8 +299,8 @@
 
     </body>
         <script>
-        var url="https://chatterbot.yuanw.wang/api/";
-        //var url="http://localhost:5000/";
+        //var url="https://chatterbot.yuanw.wang/api/";
+        var url="http://localhost:5000/";
         window.onload=function(){
             var table1=$('#dataTables-statement').DataTable({
                 searching: false,
@@ -382,6 +382,7 @@
         }
 
         function filterXSS(str) {
+        	if(str!=null){
             return str
               .replace(/&/g, '&amp;')
               .replace(/ /g, '&nbsp;')
@@ -390,8 +391,11 @@
               .replace(/"/g, '&quot;')
               .replace(/'/g, '&#39;')
               .replace(/\r{0,}\n/g, '<br/>')
+			}
+			return null
         }
 		function trun_url(str) {
+			if(str!=null){
             return str
 			  .replace(/\%/g,'%25')
               .replace(/&/g, '%26')
@@ -401,8 +405,11 @@
               .replace(/\?/g,'%3F')
 			  .replace(/#/g,'%23')
 			  .replace(/=/g,'%3D')
+			}
+			return null
         }
 		function trun_result(str) {
+			if(str!=null){
             return str
               .replace(/\%26/g, '&')
 			  .replace(/\%2B/g, '+')
@@ -412,7 +419,8 @@
 			  .replace(/\%23/g, '#')
 			  .replace(/\%3D/g, '=')
 			  .replace(/\%25/g, '%')
-			  
+			}
+			return null  
         }
         function isIllegal(str){
             var pattern1 = /alert\(/;
