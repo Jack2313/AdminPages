@@ -299,8 +299,8 @@
 
     </body>
         <script>
-        var url="https://chatterbot.yuanw.wang/api/";
-        //var url="http://localhost:5000/";
+        //var url="https://chatterbot.yuanw.wang/api/";
+        var url="http://localhost:5000/";
         window.onload=function(){
             var table1=$('#dataTables-statement').DataTable({
                 searching: false,
@@ -384,12 +384,35 @@
         function filterXSS(str) {
             return str
               .replace(/&/g, '&amp;')
-              //.replace(/ /g, '&nbsp;')
+              .replace(/ /g, '&nbsp;')
               .replace(/</g, '&lt;')
               .replace(/>/g, '&gt;')
               .replace(/"/g, '&quot;')
               .replace(/'/g, '&#39;')
               .replace(/\r{0,}\n/g, '<br/>')
+        }
+		function trun_url(str) {
+            return str
+			  .replace(/\%/g,'%25')
+              .replace(/&/g, '%26')
+			  .replace(/\+/g, '%2B')
+			  .replace(/ /g, '%20')
+			  .replace(/\//g,'%2F')
+              .replace(/\?/g,'%3F')
+			  .replace(/#/g,'%23')
+			  .replace(/=/g,'%3D')
+        }
+		function trun_result(str) {
+            return str
+              .replace(/\%26/g, '&')
+			  .replace(/\%2B/g, '+')
+			  .replace(/\%20/g, ' ')
+			  .replace(/\%2F/g, '/')
+			  .replace(/\%3F/g, '?')
+			  .replace(/\%23/g, '#')
+			  .replace(/\%3D/g, '=')
+			  .replace(/\%25/g, '%')
+			  
         }
         function isIllegal(str){
             var pattern1 = /alert\(/;
@@ -442,8 +465,10 @@
                 alert("输入不合法");
                 return
             }
-            s_id = filterXSS(s_id);
+            s_id =filterXSS(s_id);
             s_text = filterXSS(s_text);
+            s_text = trun_url(s_text);
+            s_id = trun_url(s_id);
         	var table = $('#dataTables-statement').DataTable();
         	if(s_id==''){
         		//alert('sid为空',ok);
@@ -456,6 +481,7 @@
         	var thisurl=url+"admin/search_statement?id="+s_id+"&text="+s_text+
                         "&username="+getCookie("adminName")+
                         "&token="+getCookie("token");
+            thisurl = encodeURI(thisurl)
             var settings = {
                 type: "GET",
                 url: thisurl,
@@ -482,6 +508,9 @@
                             //alert(s_text);
                             var s_res=statements[i].search_in_response_to;
                             var tags=statements[i].tags;
+
+                            text = trun_result(text)
+                            res = trun_result(res)
 
                             if(!id)id="未填写";
                             if(!text)text="未填写";
@@ -550,6 +579,9 @@
             }
             s_response = filterXSS(s_response);
             s_text = filterXSS(s_text);
+            s_tags = filterXSS(s_tags)
+            s_response = trun_url(s_response);
+            s_text = trun_url(s_text);
 
         	/*
         	if(s_search_text==''){
@@ -635,6 +667,9 @@
             }
             s_response = filterXSS(s_response);
             s_text = filterXSS(s_text);
+            s_tags = filterXSS(s_tags)
+            s_response = trun_url(s_response);
+            s_text = trun_url(s_text);
 
         	var statement = {
         		//注意项名要根据Statement的具体要求
@@ -688,8 +723,10 @@
                 alert("输入不合法");
                 return
             }
-            s_id = filterXSS(r_id);
-            s_text = filterXSS(r_text);
+            r_id = filterXSS(r_id);
+            r_text = filterXSS(r_text);
+            r_text = trun_url(r_text);
+            r_id = trun_url(r_id);
         	var table = $('#dataTables-rule').DataTable();
         	if(r_id==''){
         		//alert('sid为空',ok);
@@ -702,6 +739,7 @@
         	var thisurl=url+"admin/search_rule?id="+r_id+"&text="+r_text+
                         "&username="+getCookie("adminName")+
                         "&token="+getCookie("token");
+            thisurl = encodeURI(thisurl)
             var settings = {
                 type: "GET",
                 url: thisurl,
@@ -726,6 +764,9 @@
                             //var res=statements[i].in_response_to;
                             var s_text=rules[i].search_text;
                             var s_res=rules[i].search_in_response_to;
+
+                            s_text = trun_result(s_text)
+                            s_res = trun_result(s_res)
 
                             if(!id)id="未填写";
                             //if(!text)text="未填写";
@@ -791,6 +832,8 @@
             }
             r_response = filterXSS(r_response);
             r_text = filterXSS(r_text);
+            r_response = trun_url(r_response);
+            r_text = trun_url(r_text);
 
         	///*
         	var rule = {
@@ -860,6 +903,8 @@
             }
             r_response = filterXSS(r_response);
             r_text = filterXSS(r_text);
+            r_response = trun_url(r_response);
+            r_text = trun_url(r_text);
 
         	///*
         	var rule = {
@@ -936,7 +981,7 @@
         /***/    setCookie("userId", "", -1);
         /***/    setCookie("adminName","",-1);
                  setCookie("token","",-1)
-        /***/    location.reload();
+        /***/    window.location.href="admin_login.html";
         /***/}
         /***/function checkName(s)
         /***/{

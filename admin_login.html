@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>后端管理登陆页面</title>
+    <title>后端管理登录页面</title>
 <link rel="stylesheet" href="css/bootstrap.min.css">
         <script src="js/jquery.js"></script>
         <script src="js/bootstrap.js"></script>
@@ -66,8 +66,8 @@
     </div>  
 
     <script type="text/javascript">
-        var url="https://chatterbot.yuanw.wang/api"
-        //var url="http://localhost:5000";
+        //var url="https://chatterbot.yuanw.wang/api"
+        var url="http://localhost:5000";
 
         function filterXSS(str) {
             return str
@@ -78,6 +78,17 @@
               .replace(/"/g, '&quot;')
               .replace(/'/g, '&#39;')
               .replace(/\r{0,}\n/g, '<br/>')
+        }
+        function trun_url(str) {
+            return str
+              .replace(/&/g, '%26')
+              .replace(/\+/g, '%2B')
+              .replace(/ /g, '%20')
+              .replace(/\//g,'%2F')
+              .replace(/\?/g,'%3F')
+              .replace(/\%/g,'%25')
+              .replace(/#/g,'%23')
+              .replace(/=/g,'%3D')
         }
         function isIllegal(str){
             var pattern1 = /alert\(*/;
@@ -111,6 +122,8 @@
             var admin_Password = document.getElementById("password").value;
             admin_ID=filterXSS(admin_ID);
             admin_password=filterXSS(admin_Password);
+            admin_ID=trun_url(admin_ID);
+            admin_password=trun_url(admin_Password);
             if(isIllegal(admin_ID)){
                 alert("输入不合法");
                 return;
