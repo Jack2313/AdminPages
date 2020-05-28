@@ -497,7 +497,8 @@
                     var message=JSON.parse(JSON.stringify(XHR))
                     alert(message['responseText'])
                 },
-                success: function(data,textStatus) {                        
+                success: function(data,textStatus) { 
+                	$("#dataTables-statement").DataTable().clear();                       
                     var message=JSON.parse(JSON.stringify(data))
                     //alert(message.code)
                 if(message.code==1 && message.number>0){
@@ -532,6 +533,7 @@
                         }
                     }
                 }else{
+                	$("#dataTables-statement").DataTable().clear();
                     alert("没有搜索到数据!");
                     table.row.add(["null","null","null","null","null","null"]).draw();
                 }
@@ -755,7 +757,8 @@
                     var message=JSON.parse(JSON.stringify(XHR))
                     alert(message['responseText'])
                 },
-                success: function(data,textStatus) {                        
+                success: function(data,textStatus) {
+                $("#dataTables-statement").DataTable().clear();                        
                     var message=JSON.parse(JSON.stringify(data))
                     //alert(message.code)
                 if(message.code==1 && message.number>0){
@@ -787,6 +790,7 @@
                         }
                     }
                 }else{
+                	$("#dataTables-rule").DataTable().clear();
                     alert("没有搜索对应数据!");
                     table.row.add(["null","null","null"]).draw();
                 }
