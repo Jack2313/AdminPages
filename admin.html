@@ -8,6 +8,7 @@
         <script src="js/bootstrap.js"></script>
         <script src="js/jquery-form.js"></script>
         <link href="css/dataTables.bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/message.css">
 
         <!-- DataTables Responsive CSS -->
         <link href="css/dataTables.responsive.css" rel="stylesheet">
@@ -18,6 +19,7 @@
         <!-- Custom Fonts -->
         <link href="css/font-awesome.css" rel="stylesheet" type="text/css">
         <script src="js/sb-admin-2.js"></script>
+        <script src="js/message.js"></script>
 
         <script src="js/jquery.dataTables.min.js"></script>
         <script src="js/dataTables.bootstrap.min.js"></script>
@@ -145,19 +147,22 @@
                             <input class="form-control" type="number" placeholder="只在更新对话时填" id="input_state_id" name="input_state_id" autofocus maxlength="20"/>
                         	</div>
                         </div>
+
                         <div class="form-group">
-			         		<label class="col-md-2 control-label">text</label>
-			         		<div class="col-md-5">
-                            <input class="form-control" type="text" placeholder="对话内容" id="input_state_text" name="input_state_text"/>
-                        	</div>
+                            <label class="col-md-2 control-label">对话内容</label>
+                            <div class="col-md-5">
+                            <input class="form-control" type="text" placeholder="对话内容" id="input_state_response" name="input_state_text"/>
+                            </div>
                         </div>
 
                         <div class="form-group">
-			         		<label class="col-md-2 control-label">response to</label>
+			         		<label class="col-md-2 control-label">回复内容</label>
 			         		<div class="col-md-5">
-                            <input class="form-control" type="text" placeholder="回复内容" id="input_state_response" name="input_state_text"/>
+                            <input class="form-control" type="text" placeholder="回复内容" id="input_state_text" name="input_state_text"/>
                         	</div>
                         </div>
+
+                        
 
 
                         <div class="form-group">
@@ -261,14 +266,14 @@
                         	</div>
                         </div>
                         <div class="form-group">
-			         		<label class="col-md-2 control-label">search_text</label>
+			         		<label class="col-md-2 control-label">规则对话内容</label>
 			         		<div class="col-md-5">
                             <input class="form-control" type="text" placeholder="必填" id="input_rule_text" name="input_rule_text"/>
                         	</div>
                         </div>
 
                         <div class="form-group">
-			         		<label class="col-md-2 control-label">search_response</label>
+			         		<label class="col-md-2 control-label">规则对话回复</label>
 			         		<div class="col-md-5">
                             <input class="form-control" type="text" placeholder="必填" id="input_rule_response" name="input_rule_response"/>
                         	</div>
@@ -334,10 +339,13 @@
                         url: confirm_url,
                         error: function(XHR,textStatus,errorThrown) {
                             var message=JSON.parse(JSON.stringify(XHR))
-                            alert(message['responseText'])
+                            $.message({
+                                message: message['responseText'],
+                                type:'error'
+                            });
                         },
                         success: function(data,textStatus) {
-                            alert("删除成功！");
+                            $.message("删除成功！");
                             search_statement();
                         },
                         headers: {
@@ -364,10 +372,13 @@
                         url: confirm_url,
                         error: function(XHR,textStatus,errorThrown) {
                             var message=JSON.parse(JSON.stringify(XHR))
-                            alert(message['responseText'])
+                            $.message({
+                                message: message['responseText'],
+                                type:'error'
+                            });
                         },
                         success: function(data,textStatus) {
-                            alert("删除成功！");
+                            $.message("删除成功！");
                             search_rule();
                         },
                         headers: {
@@ -435,7 +446,10 @@
             var b=checkName();
             if(b=="游客"){
                 window.location.href="admin_login.html";
-                alert("请先登录！");
+                $.message({
+                    message: '请先登录',
+                    type:'error'
+                });
             }
             var token = getCookie("token")
             user = {
@@ -449,7 +463,10 @@
                 data: user,
                 error: function(XHR,textStatus,errorThrown) {
                     var message=JSON.parse(JSON.stringify(XHR));
-                    alert(message['responseText']);
+                    $.message({
+                        message: message['responseText'],
+                        type:'error'
+                    });
                     logout();
                     window.location.href="admin_login.html";
                 },
@@ -470,7 +487,10 @@
         	var s_id=document.getElementById("search_state_id").value;
         	var s_text=document.getElementById("search_state_text").value;
             if(isIllegal(s_id) || isIllegal(s_text)){
-                alert("输入不合法");
+                $.message({
+                    message: '输入不合法',
+                    type:'error'
+                });
                 return
             }
             s_id =filterXSS(s_id);
@@ -482,7 +502,10 @@
         		//alert('sid为空',ok);
         		if(s_text==''){
 	        		//alert('stext为空',ok);
-	        		alert("id和text不能全为空");
+                    $.message({
+                        message: "id和text不能全为空",
+                        type:'error'
+                    });
 	        		return
 	        	}
         	}
@@ -495,7 +518,10 @@
                 url: thisurl,
                 error: function(XHR,textStatus,errorThrown) {
                     var message=JSON.parse(JSON.stringify(XHR))
-                    alert(message['responseText'])
+                    $.message({
+                        message: message['responseText'],
+                        type:'error'
+                    });
                 },
                 success: function(data,textStatus) { 
                 	$("#dataTables-statement").DataTable().clear();                       
@@ -534,7 +560,10 @@
                     }
                 }else{
                 	$("#dataTables-statement").DataTable().clear();
-                    alert("没有搜索到数据!");
+                    $.message({
+                        message: "没有搜索到数据!",
+                        type:'error'
+                    });
                     table.row.add(["null","null","null","null","null","null"]).draw();
                 }
                 },
@@ -548,7 +577,10 @@
         function delete_all_statement(){
         	var s_text=document.getElementById("search_state_text").value;
         	if(s_text==''){
-        		alert('无搜索文本!');
+                $.message({
+                    message: '无搜索文本!',
+                    type:'error'
+                });
         		return 
         	}
         	var thisurl=url+"admin/delete_all_statement?text="+s_text;
@@ -575,16 +607,25 @@
             var token=getCookie("token");
 
         	if(s_text==''){
-        		alert("新建对话时text项不能为空！");
+                $.message({
+                    message: "新建对话时text项不能为空！",
+                    type:'error'
+                });
         		return;
         	}
         	if(s_response==''){
-        		alert("新建对话时response项不能为空！");
+                $.message({
+                    message: "新建对话时response项不能为空！",
+                    type:'error'
+                });
         		return;
         	}
 
             if(isIllegal(s_text) || isIllegal(s_response)){
-                alert("输入不合法");
+                $.message({
+                    message: "输入不合法",
+                    type:'error'
+                });
                 return
             }
             s_response = filterXSS(s_response);
@@ -627,16 +668,19 @@
     		        data: statement,
     		        error: function(XHR,textStatus,errorThrown) {
     		            var message=JSON.parse(JSON.stringify(XHR))
-                        alert(message['responseText'])
+                        $.message({
+                            message: message['responseText'],
+                            type:'error'
+                        });
     		        },
     		        success: function(data,textStatus) {			        	
     					if(data=='')
     					{
-    						alert("创建对话返回数据错误");
+    						$.message("创建对话返回数据错误");
     					}
     					else
     					{
-    						alert("创建成功！");
+    						$.message("创建成功！");
     						//window.location.href='main.html';
     					}
     		        },
@@ -659,20 +703,32 @@
             var token=getCookie("token");
 
         	if(s_id==''){
-        		alert("更新对话时id项不能为空！");
+                $.message({
+                    message: "更新对话时id项不能为空！",
+                    type:'error'
+                });
         		return;
         	}
         	if(s_text==''){
-        		alert("更新对话时text项不能为空！");
+                $.message({
+                    message: "更新对话时text项不能为空！",
+                    type:'error'
+                });
         		return;
         	}
         	if(s_response==''){
-        		alert("更新对话时response项不能为空！");
+                $.message({
+                    message: "更新对话时response项不能为空！",
+                    type:'error'
+                });
         		return;
         	}
 
             if(isIllegal(s_text) || isIllegal(s_response)){
-                alert("输入不合法");
+                $.message({
+                    message: "输入不合法",
+                    type:'error'
+                });
                 return
             }
             s_response = filterXSS(s_response);
@@ -701,16 +757,19 @@
 		        data: statement,
 		        error: function(XHR,textStatus,errorThrown) {
 		            var message=JSON.parse(JSON.stringify(XHR))
-                    alert(message['responseText'])
+                    $.message({
+                        message: message['responseText'],
+                        type:'error'
+                    });
 		        },
 		        success: function(data,textStatus) {			        	
 					if(data=='')
 					{
-						alert("更新对话返回数据错误");
+						$.message("更新对话返回数据错误");
 					}
 					else
 					{
-						alert("更新成功！");
+						$.message("更新成功！");
 						//window.location.href='main.html';
 					}
 		        },
@@ -730,7 +789,10 @@
         	var r_id=document.getElementById("search_rule_id").value;
         	var r_text=document.getElementById("search_rule_text").value;
             if(isIllegal(r_id) || isIllegal(r_text)){
-                alert("输入不合法");
+                $.message({
+                    message: "输入不合法",
+                    type:'error'
+                });
                 return
             }
             r_id = filterXSS(r_id);
@@ -742,7 +804,10 @@
         		//alert('sid为空',ok);
         		if(r_text==''){
 	        		//alert('stext为空',ok);
-	        		alert("id和text不能全为空");
+                    $.message({
+                        message: "id和text不能全为空",
+                        type:'error'
+                    });
 	        		return
 	        	}
         	}
@@ -755,7 +820,10 @@
                 url: thisurl,
                 error: function(XHR,textStatus,errorThrown) {
                     var message=JSON.parse(JSON.stringify(XHR))
-                    alert(message['responseText'])
+                    $.message({
+                        message: message['responseText'],
+                        type:'error'
+                    });
                 },
                 success: function(data,textStatus) {
                 $("#dataTables-statement").DataTable().clear();                        
@@ -791,7 +859,10 @@
                     }
                 }else{
                 	$("#dataTables-rule").DataTable().clear();
-                    alert("没有搜索对应数据!");
+                    $.message({
+                        message: "没有搜索对应数据!",
+                        type:'error'
+                    });
                     table.row.add(["null","null","null"]).draw();
                 }
                 },
@@ -830,16 +901,25 @@
         	
 
         	if(r_text==''){
-        		alert("新建规则时search_text项不能为空！");
+                $.message({
+                    message: "新建规则时search_text项不能为空！",
+                    type:'error'
+                });
         		return;
         	}
         	if(r_response==''){
-        		alert("新建规则时search_response项不能为空！");
+                $.message({
+                    message: "新建规则时search_response项不能为空！",
+                    type:'error'
+                });
         		return;
         	}
 
             if(isIllegal(r_text) || isIllegal(r_response)){
-                alert("输入不合法");
+                $.message({
+                    message: "输入不合法！",
+                    type:'error'
+                });
                 return
             }
             r_response = filterXSS(r_response);
@@ -867,16 +947,19 @@
 		        data: rule,
 		        error: function(XHR,textStatus,errorThrown) {
 		            var message=JSON.parse(JSON.stringify(XHR))
-                    alert(message['responseText'])
+                    $.message({
+                        message: message['responseText'],
+                        type:'error'
+                    });
 		        },
 		        success: function(data,textStatus) {			        	
 					if(data=='')
 					{
-						alert("创建规则返回数据错误");
+						$.message("创建规则返回数据错误");
 					}
 					else
 					{
-						alert("创建成功！");
+						$.message("创建成功！");
 						//window.location.href='main.html';
 					}
 		        },
@@ -897,20 +980,32 @@
         	
 
         	if(r_id==''){
-        		alert("更新规则时id项不能为空！");
+                $.message({
+                    message: "更新规则时id项不能为空！",
+                    type:'error'
+                });
         		return;
         	}
         	if(r_text==''){
-        		alert("更新规则时search_text项不能为空！");
+                $.message({
+                    message: "更新规则时search_text项不能为空！",
+                    type:'error'
+                });
         		return;
         	}
         	if(r_response==''){
-        		alert("更新规则时search_response项不能为空！");
+                $.message({
+                    message: "更新规则时search_response项不能为空！",
+                    type:'error'
+                });
         		return;
         	}
 
             if(isIllegal(r_text) || isIllegal(r_response)){
-                alert("输入不合法");
+                $.message({
+                    message: "输入不合法",
+                    type:'error'
+                });
                 return
             }
             r_response = filterXSS(r_response);
@@ -939,16 +1034,19 @@
 		        data: rule,
 		        error: function(XHR,textStatus,errorThrown) {
 		            var message=JSON.parse(JSON.stringify(XHR))
-                    alert(message['responseText'])
+                    $.message({
+                        message: message['responseText'],
+                        type:'error'
+                    });
 		        },
 		        success: function(data,textStatus) {			        	
 					if(data=='')
 					{
-						alert("更新规则返回数据错误");
+						$.message("更新规则返回数据错误");
 					}
 					else
 					{
-						alert("更新成功！");
+						$.message("更新成功！");
 						//window.location.href='main.html';
 					}
 		        },
